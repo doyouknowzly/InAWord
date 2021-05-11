@@ -1,3 +1,7 @@
+---
+typora-root-url: ..\..\resource\img
+---
+
 
 
 ### bean的生命周期
@@ -71,5 +75,5 @@
 
 > 流程图 processon版本可见 <<https://www.processon.com/diagraming/6099558a07912943913523c1>>
 
-![本地版本如下](C:\Users\Administrator\Desktop\knowledgeInAWord\resource\img\Bean的生命周期.png)
+![本地版本如下](.\Bean的生命周期.png)
 

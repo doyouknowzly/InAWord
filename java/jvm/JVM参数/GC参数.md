@@ -15,6 +15,14 @@ https://www.oracle.com/java/technologies/javase/javase-core-technologies-apis.ht
 
 
 
+JVM调优，参考文档
+
+(https://github.com/qiurunze123/memoryoptimization/blob/master/docs/jvmggggo.md)
+
+(https://github.com/qiurunze123/memoryoptimization)
+
+
+
 ### 通用参数
 
 | 分类                   | 参数                        | 解释                                                         | 默认值                 |
@@ -49,8 +57,6 @@ https://www.oracle.com/java/technologies/javase/javase-core-technologies-apis.ht
 |                        |                             |                                                              |                        |
 | GC策略                 | ScavengeBeforeFullGC        | parallel收集器参数，在执行full GC前先执行一次youong GC，以缩短full GC最大停顿时间，<br/>默认开启 | true                   |
 |                        |                             |                                                              |                        |
-|                        |                             |                                                              |                        |
-|                        |                             |                                                              |                        |
 
 
 
@@ -71,6 +77,13 @@ https://www.oracle.com/java/technologies/javase/javase-core-technologies-apis.ht
 
 ##### G1参数
 
-| 分类                   | 参数                        | 解释                                                         | 默认值                 |
-| ---------------------- | --------------------------- | ------------------------------------------------------------ | ---------------------- |
+| 分类 | 参数                           | 解释                                                         | 默认值      |
+| ---- | ------------------------------ | ------------------------------------------------------------ | ----------- |
+|      | MaxGCPauseMills                | 期望的GC停顿时间，G1会动态改变堆空间的配比，GC的策略来满足期待时间 | 200，单位ms |
+|      | InitiatingHeapOccupancyPercent | 触发并发GC周期时的堆内存占用百分比. G1之类的垃圾收集器用它来触发并发GC周期,<br/>基于整个堆的使用率,而不只是某一代内存的使用比. 值为 0 则表示”一直执行GC循环 | 45          |
+|      |                                |                                                              |             |
+|      |                                |                                                              |             |
+|      |                                |                                                              |             |
+|      |                                |                                                              |             |
+|      |                                |                                                              |             |
 

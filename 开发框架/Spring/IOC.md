@@ -14,11 +14,11 @@ typora-root-url: ..\..\resource\img
 | ---- | ------------------------ | ------------------------------------------------------------ |
 | 0    | bean的作用域             | singleton : 唯⼀ bean 实例，Spring 中的 bean 默认都是单例的。 <br>prototype : 每次请求都会创建⼀个新的 bean 实例。 <br/>request : 每⼀次HTTP请求都会产⽣⼀个新的bean，该bean仅在当前HTTP request内有效。  <br/>session : 每⼀次HTTP请求都会产⽣⼀个新的 bean，该bean仅在当前 HTTP session 内有效。  <br/>global-session： 全局session作⽤域<br><br>默认的是：单例 singleton |
 | 1    | 单例模式如何保证线程安全 | 只要有成员变量，就不是线程安全的。<br>如果有线程安全的诉求，可以将变量定义为ThreadLocal 的 |
-| 2    |                          |                                                              |
+| 2    | 怎么解决循环依赖         |                                                              |
 | 3    | bean的生命周期           | **只有四个！**<br>**实例化 -> 属性赋值 -> 初始化 -> 销毁**<br>详见 [Bean的生命周期.md](./Bean的生命周期.md) |
 | 4    | bean的常用扩展点         | 各种Aware接口， initializingBean,  DisposableBean            |
 | 5    | BeanFactory和FactoryBean | BeanFactory 是IOC容器<br>FactoryBean是可以创建一类Bean的工厂性质的Bean |
-| 6    |                          |                                                              |
+| 6    | @AutoWired的原理         |                                                              |
 | 7    |                          |                                                              |
 
 
