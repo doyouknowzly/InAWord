@@ -10,7 +10,6 @@
 | 4    | AOP的常用注解    | @Before  @After  @AfterThrowing  @AfterReturning  @Around    |
 | 5    | execution 表达式 | ***execution(<修饰符模式>?<返回类型模式><方法名模式>(<参数模式>)<异常模式>?)*** |
 | 6    | AOP的示例代码    | 参考 [异常处理AOP](../../utils/轮子代码/java/ErrorCatchAop.md) |
-|      |                  |                                                              |
 
 ### 3. 增强的执行顺序
 
@@ -42,6 +41,14 @@
 | 包名后面的 `..`               | 表示当前包及子包                                             |
 | 第二个 `*`                    | 表示类名，`*` 表示所有类                                     |
 | 最后的 `.*(..)`               | 第一个 `.` 表示任何方法名，括号内为参数类型，`..` 代表任何类型参数 |
+
+
+
+
+
+
+
+
 
 
 
@@ -127,6 +134,8 @@
 ###  2. AspectJ的细节
 
 AspectJ全称是Eclipse AspectJ, 可以单独使用，也可以整合到其它框架中。单独使用AspectJ时需要使用专门的编译器ajc。(java默认的编译器是javac)
+
+在spring中使用aspectj，不需要添加aspectjrt.jar，也不需要专门的ajc编译器，使用javac编译即可。
 
 AspectJ属于静态织入，通过修改代码来实现，有如下几个织入的时机：
 
