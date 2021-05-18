@@ -6,8 +6,8 @@
 | ---- | --------------------- | ---------- |
 | 0    | Netty服务端的启动过程 |            |
 | 1    | Netty客户端的启动过程 |            |
-|      |                       |            |
-|      |                       |            |
+| 2    | Netty支持WebSocket    |            |
+| 3    | Netty单机的性能范围   |            |
 
 
 
@@ -31,4 +31,12 @@
 
 2. 创建了一个服务端启动引导/辅助类：`ServerBootstrap`，这个类将引导我们进行服务端的启动工作。
 
-3. 给这个引导类注入相关的配置
+3. 给这个引导类注入相关的配置， 使用的是Builder模式
+
+   - 通过.group()配置1的线程组，确定线程模型
+   - 通过.channel()指定IO模型，一般使用NIO (当然，你想的话也可以使用BIO)
+     - `NioServerSocketChannel` ：指定服务端的 IO 模型为 NIO，与 BIO 编程模型中的`ServerSocket`对应
+     - `NioSocketChannel` : 指定客户端的 IO 模型为 NIO， 与 BIO 编程模型中的`Socket`对应
+   - 通过 `.childHandler()`给引导类创建一个`ChannelInitializer` ，然后指定了服务端消息的业务处理逻辑 的`Handler` 对象
+
+4. 调用 `ServerBootstrap` 类的 `bind()`方法绑定端口
