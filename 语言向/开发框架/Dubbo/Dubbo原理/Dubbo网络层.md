@@ -98,9 +98,35 @@ Dubbo中根据请求的消息类是直接被I/O线程处理还是被业务线程
 
 ![image-20210521145911045](D:\Users\80233448\AppData\Roaming\Typora\typora-user-images\image-20210521145911045.png)
 
-- **all（AllDispatcher类）**：所有消息都派发到业务线程池，这些消息包括请求、响应、连接事件、断开事件等，响应消息会优先使用对于请求所使用的线程池。
+- **all（AllDispatcher类）**：所有消息都派发到业务线程池，这些消息包括请求、响应、连接事件、断开事件等，响应消息会优先使用对于请求所使用的线程池。(默认选择这个)
 - **direct（DirectDispatcher类）**：所有消息都不派发到业务线程池，全部在IO线程上直接执行。
 - **message（MessageOnlyDispatcher类）**：只有请求响应消息派发到业务线程池，其他消息如连接事件、断开事件、心跳事件等，直接在I/O线程上执行。
 - **execution（ExecutionDispatcher类）**：只把请求类消息派发到业务线程池处理，但是响应、连接事件、断开事件、心跳事件等消息直接在I/O线程上执行。
 - **connection（ConnectionOrderedDispatcher类）**：在I/O线程上将连接事件、断开事件放入队列，有序地逐个执行，其他消息派发到业务线程池处理。
 
+
+
+//todo 上面这些类型的区别和优缺点、适用场景
+
+> 那Dubbo默认的线程模型是哪种呢？
+
+从netty启动流程来看，初始化NettyServer时会进行加载具体的线程模型，代码如下：
+
+```java
+public NettyServer(URL url, ChannelHandler handler) throws RemotingException {
+    super(ExecutorUtil.setThreadName(url, SERVER_THREAD_POOL_NAME), ChannelHandlers.wrap(handler, url));
+}
+public static ChannelHandler wrap(ChannelHandler handler, URL url) {
+    return ChannelHandlers.getInstance().wrapInternal(handler, url);
+}
+protected ChannelHandler wrapInternal(ChannelHandler handler, URL url) {
+    return new MultiMessageHandler(new HeartbeatHandler(ExtensionLoader.getExtensionLoader(Dispatcher.class)
+            .getAdaptiveExtension().dispatch(handler, url)));
+}
+```
+
+这里根据URL里的线程模型来选择具体的Dispatcher实现类。
+
+Dubbo提供的Dispatcher类，其默认的实现类是all ，也就是AllDispatcher类。
+
+不过Dispatcher是通过SPI方式加载的，也就是用户可以自定义自己的线程模型，只需实现Dispatcher类然后配置选择使用自定义的Dispatcher类即可。
