@@ -1,13 +1,9 @@
-## Dubbo扩展点
-
-
-
 | 序号 | 问题                     | 一句话概括                                                   |
 | ---- | ------------------------ | ------------------------------------------------------------ |
 | 0    | SPI机制                  | Dubbo没有直接使用Java SPI， 而是做了些改动，但是兼容了Java SPI |
 | 1    | Adaptive注解             | [Adaptive](./Adaptive.md)                                    |
 | 2    | 过滤器Filter             | [过滤器Filter](./过滤器Filter.md)                            |
-|      |                          |                                                              |
+| 3    | Dubbo扩展点的设计思路    | [官方文档](https://dubbo.apache.org/zh/docs/v2.7/dev/principals/extension/) |
 |      |                          |                                                              |
 |      | 如果要做调用链，怎么实现 |                                                              |
 

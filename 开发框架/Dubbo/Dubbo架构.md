@@ -79,17 +79,7 @@
 
 ![/dev-guide/images/dubbo-extension.jpg](https://dubbo.apache.org/imgs/dev/dubbo-extension.jpg)
 
-## 暴露服务时序
 
-展开总设计图左边服务提供方暴露服务的蓝色初始化链，时序图如下：
-
-![/dev-guide/images/dubbo-export.jpg](https://dubbo.apache.org/imgs/dev/dubbo-export.jpg)
-
-## 引用服务时序
-
-展开总设计图右边服务消费方引用服务的蓝色初始化链，时序图如下：
-
-![/dev-guide/images/dubbo-refer.jpg](https://dubbo.apache.org/imgs/dev/dubbo-refer.jpg)
 
 ## 领域模型
 
