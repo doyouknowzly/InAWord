@@ -33,22 +33,18 @@ Netty是最流行的 NIO 框架，由 JBOSS 提供的，整合了FTP,SMTP,HTTP�
 
 ### 4. Netty 核心组件有哪些？分别有什么作用？
 
-| 序号 | 组件            | 作用              | 备注                                                         |
-| ---- | --------------- | ----------------- | ------------------------------------------------------------ |
-| 0    | EventLoop       |                   | 每个NioEventLoop中包含了一个NIO Selector、一个队列、一个线程 |
-| 1    | EventLoopGroup  | 包含多个EventLoop | 默认的构造函数实际会起的线程数为 **`CPU核心数*2`**           |
-| 2    | Channel         |                   |                                                              |
-| 3    | ChannelFuture   |                   |                                                              |
-| 4    | ChannelHandler  |                   |                                                              |
-| 5    | ChannelPipeline |                   |                                                              |
-| 6    | Bootstrap       | 客户端启动辅助类  |                                                              |
-| 7    | ServerBootstrap | 服务端启动辅助类  |                                                              |
-|      |                 |                   |                                                              |
-| 0    | NIO Selector    |                   |                                                              |
-
-
-
-
+| 序号 | 组件            | 作用                         | 备注                                                         |
+| ---- | --------------- | ---------------------------- | ------------------------------------------------------------ |
+| 0    | EventLoop       | IO线程的抽象                 | EventLoop 中的线程都是用来操作IO事件的，包括IO建立连接，IO读写<br/>每个NioEventLoop中包含了一个NIO Selector、一个队列、一个线程、一堆Channel |
+| 1    | EventLoopGroup  | 包含多个EventLoop, 即 线程池 | 默认的构造函数实际会起的线程数为 **`CPU核心数*2`**           |
+| 2    | Channel         | 网络能力的抽象               | 内部封装了 Java NIO                                          |
+| 3    | ChannelFuture   | 异步回调                     | 在Netty中所有的IO操作都是异步的                              |
+| 4    | ChannelHandler  | 处理业务逻辑                 |                                                              |
+| 5    | ChannelPipeline | 数据在pipeLine中流动         | 数据被流水线pipeline中的各个Handler挨个处理                  |
+| 6    | Bootstrap       | 客户端启动辅助类             |                                                              |
+| 7    | ServerBootstrap | 服务端启动辅助类             |                                                              |
+| 8    | ByteBuf         | 数据缓冲区                   | 替代Java Nio的ByteBuffer， 更好用                            |
+| 9    | NIO Selector    |                              |                                                              |
 
 
 

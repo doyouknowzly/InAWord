@@ -1,6 +1,6 @@
-## synchronized
+# synchronized
 
-### 1. 用法
+## 一. 用法
 
 - 用于非静态方法
 - 用于静态方法
@@ -37,13 +37,15 @@ public class useSynchronized {
     }
 ```
 
-### 2.一句话总结
+### 二.一句话总结
 
 轻量级锁使用CAS, 底层时lock cmpxchg指令
 
 重量级锁用的管程monitor，底层使用c++ ObjectMonitor,  是对象私有的
 
-### 3. 锁升级
+
+
+### 三. 锁升级
 
 ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ca8ffe97b5fa4dd6b2d4ebdcab3ddbd7~tplv-k3u1fbpfcp-watermark.image)  
 
@@ -55,7 +57,9 @@ public class useSynchronized {
 
 ![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6ac575ea51e24b4ebf11876c3d312b98~tplv-k3u1fbpfcp-watermark.image)
 
-### 4.锁升级条件
+
+
+### 四.锁升级条件
 
 #### 偏向锁升级轻量级锁--条件：
 
@@ -70,12 +74,20 @@ public class useSynchronized {
 
 - 各个线程使用 CAS 操作，对对象的 markword进行比较--交换，尝试写上自己线程id
 
-### 5.预习知识
+  
+
+### 五.预习知识
 
 - markWord
   ![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a591ac3a12ea466aa0ed90a667d1d627~tplv-k3u1fbpfcp-watermark.image)
 
-### 6.基本原理
+参考 [MarkWord
+
+[](../线程/MarkWord)
+
+
+
+### 六.基本原理
 
 - 偏向锁 
   - 在对象头markword中，写了第一个线程的thread Id，寄希望与没有人改它，所以连CAS都不用做
