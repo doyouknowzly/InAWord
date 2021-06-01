@@ -11,7 +11,9 @@
 ### 2. AQS的原理，用一句话概括
 
 > 如果被请求的共享资源空闲，那么就将当前请求资源的线程设置为有效的工作线程，将共享资源设置为锁定状态；  
-> 如果共享资源被占用，就需要一定的阻塞等待唤醒机制来保证锁分配。这个机制主要用的是CLH队列的变体实现的，将暂时获取不到锁的线程加入到队列中等待被唤醒(防止过度自旋，浪费cpu)。  
+> 如果共享资源被占用，就需要一定的阻塞等待唤醒机制来保证锁分配。
+>
+> 这个机制主要用的是CLH队列的变体实现的，将暂时获取不到锁的线程加入到队列中等待被唤醒(防止过度自旋，浪费cpu)。  
 > ![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/14ffc4f7b48e4044b1fff58c833d111c~tplv-k3u1fbpfcp-watermark.image)  
 
 
@@ -128,12 +130,34 @@ final boolean acquireQueued(final Node node, int arg) {
 CLH队列中Node节点的状态  
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/66f2951613ab4f8d8c99e088b1ca3507~tplv-k3u1fbpfcp-watermark.image)
 
+- 何时入队列
+
+  - 一个线程获取锁失败了，就会被放入等待队列。
+  - acquireQueued会把放入队列中的线程不断去获取锁，直到获取成功或者不再需要获取（中断）。
+
 - 何时出队列
+
+  - 前置节点是头结点，且当前线程获取锁成功
+
 - 如何出队列
+
 - 何时阻塞
+
 - 何时中断
+
 - 何时唤醒
-  总的来说，一个线程获取锁失败了，被放入等待队列，acquireQueued会把放入队列中的线程不断去获取锁，直到获取成功或者不再需要获取（中断）。
+  
+- 如何获取锁
+
+- 如何释放锁
+
+- 如何统计哪些线程在争抢锁
+
+- 如何判断当前获得锁的是哪个线程
+
+- 获取锁失败的线程状态
+
+  waiting
 
 # 参考资料
 1. [美团技术博客-<<从ReentrantLock的实现看AQS的原理及应用>>](https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html)
