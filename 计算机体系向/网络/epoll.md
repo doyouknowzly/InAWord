@@ -9,6 +9,10 @@
 
 参考Linux官方文档 (https://man7.org/linux/man-pages/man7/epoll.7.html)
 
+### 0. epoll的思路
+
+
+
 
 
 ### 1. epoll的结构体、各个组件的作用

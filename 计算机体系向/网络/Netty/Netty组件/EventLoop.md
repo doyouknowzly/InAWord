@@ -1,6 +1,6 @@
-### EventLoop
+# EventLoop
 
-#### 0. EventLoop
+## 一、定义
 
 EventLoop是一个接口，是Netty的一种抽象，表示从建立连接到处理各种事件的一个循环。
 
@@ -16,7 +16,7 @@ EventLoop是一个接口，是Netty的一种抽象，表示从建立连接到处
 
 
 
-
+## 二、组件
 
 以NioEventLoop(最常见的EventLoop的实现类)举例，其中有以下重要的组件
 
@@ -53,6 +53,8 @@ EventLoop是一个接口，是Netty的一种抽象，表示从建立连接到处
   存储所有就绪状态的Channel， EventLoop每次就遍历这个selectKeys, 拿到每一个Key之后去获取对应的Channel， 接下来再判断是就绪读or就绪写，然后再判断是放到
 
 
+
+## 三、原理
 
 参考文档: (https://blog.csdn.net/qq_35835624/article/details/104051336)
 
@@ -111,9 +113,6 @@ protected void run() {
         }
     }
 }
-————————————————
-版权声明：本文为CSDN博主「A股慈善家」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/qq_35835624/article/details/104051336@Override
     protected void run() {
         for (;;) {
             try {
