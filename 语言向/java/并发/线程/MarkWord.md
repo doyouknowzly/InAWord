@@ -11,7 +11,11 @@
 
 ### 对象头
 
-Hotspot虚拟机的对象头包括两部分信息，第一部分用于储存对象自身的运行时数据，如哈希码，GC分代年龄，锁状态标志，锁指针等，这部分数据在32bit和64bit的虚拟机中大小分别为32bit和64bit，官方称它为"Mark word",考虑到虚拟机的空间效率，Mark Word被设计成一个非固定的数据结构以便在极小的空间中存储尽量多的信息，它会根据对象的状态复用自己的存储空间，详细情况如下图：
+Hotspot虚拟机的对象头包括两部分信息，
+
+第一部分用于储存对象自身的运行时数据，如哈希码，GC分代年龄，锁状态标志，锁指针等，这部分数据在32bit和64bit的虚拟机中大小分别为32bit和64bit。
+
+官方称它为"Mark word",考虑到虚拟机的空间效率，Mark Word被设计成一个非固定的数据结构以便在极小的空间中存储尽量多的信息，它会根据对象的状态复用自己的存储空间，详细情况如下图：
 ![img](https://imgconvert.csdnimg.cn/aHR0cHM6Ly93d3cubGludXhpZGMuY29tL3VwbG9hZC8yMDE4XzAyLzE4MDIwNjIxNTM3MjMzMTEucG5n?x-oss-process=image/format,png)
 
 

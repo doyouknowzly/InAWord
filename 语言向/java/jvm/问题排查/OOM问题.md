@@ -4,6 +4,12 @@
 
 当 JVM 内存严重不足时，就会抛出 java.lang.OutOfMemoryError 错误。
 
+除了程序计数器外，虚拟机内存的其他几个运行时区域都有发 生OutOfMemoryError异常的可能
+
+> 通过参数-XX：+HeapDumpOnOutOf-MemoryError可以让虚拟机 在出现内存溢出异常的时候Dump出当前的内存堆转储快照以便进行事后分析
+
+
+
 下面总结了常见的 OOM 原因及其解决方法
 
 | 序号  | 原因                                   | 核心原因                 | 解决方法                                                     |
@@ -189,6 +195,8 @@ JVM 在为数组分配内存前，会检查要分配的数据结构在系统中�
 ## 9、Direct buffer memory
 
 Java 允许应用程序通过 Direct ByteBuffer 直接访问堆外内存，许多高性能程序通过 Direct ByteBuffer 结合内存映射文件（Memory Mapped File）实现高速 IO。
+
+> 如果发现内存溢出之后产生的Dump文件很小，而程序中又直接或间接使用了 DirectMemory（典型的间接使用就是NIO），那就可以考虑重点检查一下直接内存方面的原因了
 
 ### 原因分析
 
