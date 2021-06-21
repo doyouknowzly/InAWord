@@ -8,7 +8,9 @@ OpenResty® 是一个基于 **Nginx与 Lua** 的高性能 Web 平台，其内部
 
 
 
-#### 优势 ：兼顾 nginx 底层C语言的高性能、高并发； 又具有Lua 的动态性 (不用重启就能动态修改代码，且Lua语法简单明了)
+#### 优势 ：兼顾 nginx 底层C语言的高性能、高并发； 
+
+#### 又具有Lua 的动态性 (不用重启就能动态修改代码，且Lua语法简单明了)
 
 > nginx本身是世界份额排名第一的web服务器，Apache第二， 而OpenResty是第五
 
@@ -53,9 +55,9 @@ set_by_lua：设置变量；
 
 rewrite_by_lua：转发、重定向等；
 
-access_by_lua：准入、权限等；c
+access_by_lua：准入、权限等；
 
-ontent_by_lua：生成返回内容；
+content_by_lua：生成返回内容；
 
 header_filter_by_lua：应答头过滤处理；
 

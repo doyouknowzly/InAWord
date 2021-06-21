@@ -13,6 +13,8 @@
 
 ### 3. 增强的执行顺序
 
+参考文章 (https://www.jianshu.com/p/63f251df6dfe)
+
 1. 正常情况
 
    ![img](https://upload-images.jianshu.io/upload_images/12170632-2931198a9b094f45.jpeg?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
