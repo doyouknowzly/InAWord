@@ -5,17 +5,17 @@
 | 2    | epoll原理详解                 |            |
 | 3    | epoll的ET、LT模式             |            |
 | 4    | epoll惊群问题                 |            |
-|      |                               |            |
+| 5    | epoll到底是同步的or异步的？   |            |
 
 参考Linux官方文档 (https://man7.org/linux/man-pages/man7/epoll.7.html)
 
-### 0. epoll的思路
+## 0. epoll的思路
 
 
 
 
 
-### 1. epoll的结构体、各个组件的作用
+## 1. epoll的结构体、各个组件的作用
 
 ```cpp
 //用户数据载体
@@ -47,7 +47,7 @@ int epoll_wait(int epfd, struct epoll_event *events,
 
 
 
-### 2. epoll原理详解
+## 2. epoll原理详解
 
 参考文档 (https://zhuanlan.zhihu.com/p/87843750)
 
@@ -78,4 +78,29 @@ select低效的原因之一是将“维护等待队列”和“阻塞进程”�
   1. 如果代码运行到了**epoll_wait()** ，内核会将进程A放入eventpoll的等待队列中，进程A会一直阻塞等待
   2. 当socket接收到数据，硬盘、网卡等硬件设备数据准备完成后发起**硬中断**，中断CPU。
   3. 中断程序会操作eventpoll对象，而不是直接操作进程。中断程序一方面修改rdlist，另一方面唤醒eventpoll等待队列中的进程，进程A再次进入运行状态。也因为rdlist的存在，进程A可以知道哪些socket发生了变化
+
+## 5.epoll到底是同步的还是异步的
+
+<UNIX网络编程>> 第三版 6.2节
+
+> 1. 一个同步的IO操作使得请求进程一直被阻塞，直到IO操作完成；
+> 2. 一个异步的IO操作不会导致请求进程被阻塞.
+
+所以同步&异步IO的本质区别是请求进程的的阻塞or not。
+
+从这个定义上来看，select和epoll没有区别，都会使得请求的进程阻塞，所以他们都是NIO的实现，都不是异步的
+
+NIO的non-blocking指的是server进程对**系统调用**的非阻塞，导致**server进程本身不阻塞**
+
+
+
+| 操作                      | 属于 | 对于request | 对于Server |
+| ------------------------- | ---- | ----------- | ---------- |
+| select                    | NIO  | 阻塞        | 阻塞       |
+| epoll                     | NIO  | 阻塞        | 非阻塞     |
+| io_submit<br>io_getevents | AIO  | 非阻塞      | 非阻塞     |
+
+使用AIO时，request进程不需要阻塞等待IO结束，而是可以干自己的事情，直到IO结束，系统调用会通过信号、回调等方式通知request进程
+
+
 
