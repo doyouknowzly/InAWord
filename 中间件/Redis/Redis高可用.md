@@ -1,5 +1,7 @@
 # Redis高可用
 
+[toc]
+
 
 
 Redis高可用的发展历史
