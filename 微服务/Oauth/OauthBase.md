@@ -1,5 +1,9 @@
 参考文档 : https://blog.huoding.com/2010/10/10/8
 
+> OAuth授权的核心 :
+
+==颁发==访问令牌(Token)、使用访问令牌
+
 
 
 ## 一、什么是OAuth
@@ -13,6 +17,8 @@
 - Consumer：消费方
 - Service Provider：服务提供者
 - User：用户
+
+
 
 
 

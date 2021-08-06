@@ -12,31 +12,21 @@
 
 1. 首先，去掉签名，改用SSL（HTTPS）确保安全性，所有的token不再有对应的secret存在，这也直接导致**OAuth**2.0不兼容老版本。
 
-2. **OAuth**1.0定义了三种角色：User、Service Provider、Consumer。
-
-   而**OAuth**2.0则定义了四种角色：Resource Owner、Resource Server、Client、Authorization Server：
-
-   - Resource Owner：User
-
-   - Resource Server：Service Provider
-
-   - Client：Consumer
-
-   - Authorization Server：Service Provider
-
-     
-
-   也就是说，**OAuth**2.0把原本**OAuth**1.0里的Service Provider角色分拆成Resource Server和Authorization Server两个角色，在授权时交互的是Authorization Server，在请求资源时交互的是Resource Server，当然，有时候他们是合二为一的。
-
-     
+   
 
 3. 新增授权类型
 
-   - **Authorization Code**
+   - **Authorization Code** 授权码
+     
      - 可用范围：此类型可用于有服务端的应用，是最贴近老版本的方式。
-   - **Implicit Grant**
+     
+       是 OAuth 2.0 中==最经典、最完备、最安全、应用最广泛==的许可类型
+   - **Implicit Grant** 隐式许可
+     
      - 可用范围：此类型可用于没有服务端的应用，比如Javascript应用。
-   - **Resource Owner Password Credentials**
+   - **Resource Owner Password Credentials **资源拥有者凭据许可
+     
      - 可用范围：不管有无服务端，此类型都可用。
-   - **Client Credentials**
+   - **Client Credentials** 客户端凭据许可
+     
      - 可用范围：不管有无服务端，此类型都可用

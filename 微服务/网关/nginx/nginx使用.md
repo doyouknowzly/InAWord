@@ -38,6 +38,16 @@ cd /usr/local/nginx/sbin
 
 ### 四、重新加载
 
+> 最好先尝试test检查下语法
+
+```shell
+./nginx -t
+```
+
+
+
+之后重启：
+
 ```shell
 ./nginx -s reload
 ```
