@@ -6,7 +6,7 @@
 | 2    | Http长、短连接，和TCP有啥关系 |
 | 3    | Cookie原理                    |
 | 4    | Session                       |
-|      |                               |
+| 5    | post请求格式                  |
 
 ## HTTP协议 
 
@@ -117,3 +117,53 @@ HTTP短连接
 
 
 因为HTTP本质上使用TCP/IP传输数据， 连接指的就是传输层的TCP连接，所以HTTP协议的长连接本质上就是TCP的长连接。
+
+
+
+### 5.post请求格式
+
+**常见的Body格式有**
+
+- form-data
+- x-www-form-urlencoded
+- raw
+- binary
+- json
+
+
+
+对比得到区别如下：
+
+1. **x-www-form-urlencoded**
+
+   > 是post请求的默认格式， 使用js中URLencode转码方法
+
+   **application/x-www-form-urlencoded，会将表单内的数据转换为键值对，&分隔。**
+   当form的action为get时，将表单数据编码为(name1=value1&name2=value2…)，
+
+   然后把这个字符串append到url后面，用?分隔，跳转到这个新的url。
+
+   当form的action为post时，浏览器将form数据封装到http body中，然后发送到server。
+   这个格式不能提交文件。
+
+2. form-data
+
+   对于一段utf8编码的字节，用application/x-www-form-urlencoded传输其中的ascii字符没有问题，但对于非ascii字符传输效率就很低了（汉字‘丁’从三字节变成了九字节）
+
+   >  因此在传很长的字节（如文件）时应用multipart/form-data格式
+
+   就是Content-Type: multipart/form-data,
+
+   它会将表单的数据处理为一条消息，以标签为单元，用分隔符分开。既可以上传键值对，也可以上传文件。当上传的字段是文件时，会有Content-Type来说明文件类型；content-disposition，用来说明字段的一些信息；
+
+   由于有boundary隔离，所以multipart/form-data既可以上传文件，也可以上传键值对，它采用了键值对的方式，所以可以上传多个文件。
+
+   
+
+3. raw
+   可以上传任意格式的文本，可以上传text、json、xml、html、javascript等
+
+4. binary
+   等同于Content-Type:application/octet-stream，只可上传二进制数据，通常用来上传文件，由于没有键值，所以一次只能上传一个文件
+
+   
