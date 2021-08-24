@@ -122,7 +122,7 @@ public interface TransactionDefinition {
 
 ## 三、什么时候@Transactional注解失效
 
-1、在同一个类中调用 `@Transactional` 注解的方法
+1、在同一个类中调用 `@Transactional` 注解的方法 （无法生成代理）
 
 2、必须正确地设置 @Transactional 的 rollbackFor 和 propagation 属性，否则事务可能会回滚失败
 
@@ -132,4 +132,4 @@ public interface TransactionDefinition {
 - **`TransactionDefinition.PROPAGATION_NOT_SUPPORTED`**:  以非事务方式运行，如果当前存在事务，则把当前事务挂起。
 - **`TransactionDefinition.PROPAGATION_NEVER`**:  以非事务方式运行，如果当前存在事务，则抛出异常。
 
-
+3、注解在private方法上 (无法生成代理)
