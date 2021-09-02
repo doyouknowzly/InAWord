@@ -15,7 +15,7 @@
 | 2    | 标签间层级关系         |                                                              |
 | 3    | 不同粒度配置的覆盖关系 |                                                              |
 | 4    | 配置的解析             | 所有 dubbo 的标签，都统一用 `DubboBeanDefinitionParser` 进行解析，<br>基于一对一属性映射，将 XML 标签解析为 Bean 对象<br> <br>在 `ServiceConfig.export()` 或 `ReferenceConfig.get()` 初始化时，<br>将 Bean 对象转换 URL 格式，所有 Bean 属性转成 URL 的参数 |
-|      |                        |                                                              |
+| 5    | 本地直连               | <dubbo:reference id="userFacade" interface="com.example.modules.user.UserFacade" url="dubbo://localhost:20880?serialization=protustuff" /> |
 
 ### 0.配置分类
 
