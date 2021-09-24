@@ -49,5 +49,18 @@ cleanLog.sh 的文件内容如下:
 
 
 
-## 注意事项
+## cron表达式
 
+https://zhuanlan.zhihu.com/p/35629505
+
+![img](https://pic3.zhimg.com/80/v2-7e71c082b4aa6141a35f39e60b861dba_720w.jpg)
+
+> 6位或7位： 因为最后一位的年，是选填项
+
+
+
+常用示例:
+
+![](https://pic1.zhimg.com/80/v2-6091f4a10e66595b5d5a35f19ad807bc_720w.jpg)
+
+> 一小时一次是  0 0 1/1 * * ? ，而不是 * * 1/1 * * ?，后者会每一秒都执行
