@@ -6,7 +6,7 @@
 
 | 序号 | 问题                              | 一句话解释                                                   | 详细知识点                                                   |
 | ---- | --------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 0    | 事务隔离级别                      | 下面的隔离级别，从上往下**越来越严，性能越来越差**<br> 一、读未提交（read uncommitted）<br>二、读提交（read committed）<br>三、可重复读（repeatable read）<br>四、串行化（serializable ） | [三歪连MVCC和事务隔离级别的关系](https://mp.weixin.qq.com/s/0-YEqTMd0OaIhW99WqavgQ) |
+| 0    | 事务隔离级别                      | 下面的隔离级别，从上往下**越来越严，性能越来越差**<br> 一、读未提交（read uncommitted）<br>二、读提交（read committed）<br>三、可重复读（repeatable read）(innodb默认)<br>四、串行化（serializable ） | [三歪连MVCC和事务隔离级别的关系](https://mp.weixin.qq.com/s/0-YEqTMd0OaIhW99WqavgQ) |
 | 1    | 事务的隔离级别的原理              |                                                              |                                                              |
 | 2    | MVCC是什么？和事务隔离级别的关系? | 在查询同一条记录的时候，不同时刻启动的事务会有不同的 read-view。<br>同一条记录在系统中可以存在多个版本，就是数据库的多版本并发控制（MVCC），由undo log实现 |                                                              |
 | 3    | MySQL如何实现事务的               | 隔离性由锁来实现；一致性由undo log来实现；原子性、持久性由redo log来实现 |                                                              |

@@ -14,6 +14,12 @@ https://www.cnblogs.com/shihaiming/p/5855616.html
 
 https://www.cnblogs.com/lyc88/articles/13268445.html
 
+SHOW VARIABLES WHERE Variable_name LIKE 'character_set_%' OR Variable_name LIKE 'collation%';
+
+
+
+
+
 ## 二、方案2，字符encode一下再存储，读的时候decode一下
 
 
