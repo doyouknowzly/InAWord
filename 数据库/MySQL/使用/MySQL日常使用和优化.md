@@ -7,6 +7,7 @@
 | 2    | explain语句怎么用              |            |            |
 | 3    | 分库分表                       |            |            |
 | 4    | 触发器是什么，什么场景下使用？ |            |            |
+| 5    | count(1) 和count(*)            |            |            |
 
 
 
@@ -78,3 +79,12 @@ mysql> EXPLAIN SELECT * FROM t1 UNION SELECT * FROM t2;
 
 
 大部分场景，最好是const, ref,range
+
+
+
+## 5. count(1)和count(*)
+
+1. Count (*)和Count(1)查询结果是一样的，都包括对NULL的统计，而count(列名) 是不包括NULL的统计
+2. 如果表没有主键,count(1)比count(*)快.
+3. 如果有主键的话，主键作为count的条件时候count(主键)最快.
+4. 如果表只有一个字段的话那count(*)就是最快的

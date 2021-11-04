@@ -12,7 +12,7 @@ typora-root-url: ..\..\..\..\resource\img
 | ---- | --------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 0    | 事务隔离级别                      | 下面的隔离级别，从上往下**越来越严，性能越来越差**<br> 一、读未提交（read uncommitted）<br>二、读提交（read committed）<br>三、可重复读（repeatable read）(innodb默认)<br>四、串行化（serializable ） | [三歪连MVCC和事务隔离级别的关系](https://mp.weixin.qq.com/s/0-YEqTMd0OaIhW99WqavgQ) |
 | 1    | 事务的隔离级别的原理              |                                                              |                                                              |
-| 2    | MVCC是什么？和事务隔离级别的关系? | 在查询同一条记录的时候，不同时刻启动的事务会有不同的 read-view。<br>同一条记录在系统中可以存在多个版本，就是数据库的多版本并发控制（MVCC），由undo log实现 |                                                              |
+| 2    | MVCC是什么？和事务隔离级别的关系? | 同一条记录在系统中可以存在多个版本，就是数据库的多版本并发控<br>由undo log + readView实现 |                                                              |
 | 3    | MySQL如何实现事务的               | 隔离性由锁来实现；一致性由undo log来实现；原子性、持久性由redo log来实现 |                                                              |
 | 4    | 事务的分类                        | 扁平事务<br>带有保存点的扁平事务<br>链事务<br>嵌套事务<br>分布式事务 |                                                              |
 
@@ -61,15 +61,13 @@ typora-root-url: ..\..\..\..\resource\img
 | 隔离级别                     | 第一类丢失更新 | 第二类丢失更新 | 脏读 | 不可重复读 | 幻读 |
 | ---------------------------- | -------------- | -------------- | ---- | ---------- | ---- |
 | SERIALIZABLE （串行化）      | X              | X              | X    | X          | X    |
-| REPEATABLE READ（可重复读）  | X              | X              | X    | X          | Y    |
+| REPEATABLE READ（可重复读）  | X              | Y              | X    | X          | Y    |
 | READ COMMITTED （读已提交）  | X              | Y              | X    | Y          | Y    |
 | READ UNCOMMITTED（读未提交） | X              | Y              | Y    | Y          | Y    |
 
-**注意， 在REPEATABLE READ（可重复读）** 的隔离级别下，InnoDB引擎通过Next-Key锁的实现，避免了幻读问题
-
 参考 [锁的分类](../锁/锁的分类)
 
-> InnoDB牛逼！ 在可重复读的级别下，达到了串行化的隔离要求
+> InnoDB牛逼！ 使用next-key锁，在可重复读的级别下，达到了串行化的隔离要求，避免了幻读问题
 
 
 
@@ -124,9 +122,15 @@ typora-root-url: ..\..\..\..\resource\img
 
   在第一次读取数据时生成一个ReadView
 
+  ![图片](https://mmbiz.qpic.cn/mmbiz_jpg/uChmeeX1FpxIiaicKYEDP7EgUawL2URB6alLIicqMMJic9z7q9Yb9SsVya7GMuyV4D78L170xdcIuWM0sIMKlMhicLA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+  
+
 - READ COMMITTD
 
   在每一次进行普通SELECT操作前都会生成一个ReadView
+  
+  ![图片](https://mmbiz.qpic.cn/mmbiz_jpg/uChmeeX1FpxIiaicKYEDP7EgUawL2URB6aptNsaNBzEhLY8t3mQZWkPDCuHib9703wQAQLay1fa8wnx7gZ73LVxwQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
 ### 1.4 未提交读
 
@@ -134,45 +138,7 @@ typora-root-url: ..\..\..\..\resource\img
 
 
 
-## 2.MVCC是什么
 
-MVCC(Multi-Version Concurrency Control)即多版本并发控制, **只适用于Msyql隔离级别中的读已提交(Read committed)和可重复读(Repeatable Read)**。
-
-> Read uncommitted由于存在脏读，即能读到未提交事务的数据行，所以不适用MVCC
-
-**MVCC**使得大部分支持行锁的事务引擎，不再单纯的使用行锁来进行数据库的并发控制，取而代之的是把数据库的行锁与行的多个版本结合起来，只需要很小的开销,就可以实现非锁定读，从而大大提高数据库系统的并发性能。
-
-
-
-### 2.1 原理
-
-MySQL的行记录，除了存储用户定义的列之外，还有2-3个额外的隐藏列 
-
-- 如果没有显式指定主键，会有row_id
-- 6字节的事务ID
-- 7字节的回滚指针 (undo log)
-
-每次对记录进行改动，都会记录一条`undo日志`，每条`undo日志`也都有一个`roll_pointer`属性（`INSERT`操作对应的`undo日志`没有该属性，因为该记录并没有更早的版本），可以将这些`undo日志`都连起来，串成一个链表，所以现在的情况就像下图一样：
-
-![image_1d6vfrv111j4guetptcts1qgp40.png-57.1kB](https://user-gold-cdn.xitu.io/2019/3/27/169bf198524e1b34?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
-
-还有一个核心问题就是：需要判断一下版本链中的哪个版本是当前事务可见的。
-
-所以设计`InnoDB`的大叔提出了一个`ReadView`的概念，这个`ReadView`中主要包含当前系统中还有**哪些活跃的读写事务**，把它们的事务id放到一个列表中，我们把这个列表命名为为`m_ids`。这样在访问某条记录时，只需要按照下边的步骤判断记录的某个版本是否可见：
-
-1. 如果被访问版本的`trx_id`属性值（隐藏的列，意思是事务ID）小于`m_ids`列表中最小的事务id，表明生成该版本的事务在生成`ReadView`前已经提交，所以该版本可以被当前事务访问。
-2. 如果被访问版本的`trx_id`属性值大于`m_ids`列表中最大的事务id，表明生成该版本的事务在生成`ReadView`后才生成，所以该版本不可以被当前事务访问。
-3. 如果被访问版本的`trx_id`属性值在`m_ids`列表中最大的事务id和最小事务id之间，那就需要判断一下`trx_id`属性值是不是在`m_ids`列表中，如果在，说明创建`ReadView`时生成该版本的事务还是活跃的，该版本不可以被访问；如果不在，说明创建`ReadView`时生成该版本的事务已经被提交，该版本可以被访问。
-
-
-
-如果某个版本的数据对当前事务不可见的话，那就 **顺着版本链找到下一个版本的数据**，继续按照上边的步骤判断可见性，依此类推，直到版本链中的最后一个版本，如果最后一个版本也不可见的话，那么就意味着该条记录对该事务不可见，查询结果就不包含该记录。
-
-### 2.3 优缺点
-
-MVCC在大多数情况下代替了行锁，实现了对读的非阻塞，读不加锁，读写不冲突。
-
-缺点是每行记录都需要额外的存储空间，需要做更多的行维护和检查工作。
 
 
 
