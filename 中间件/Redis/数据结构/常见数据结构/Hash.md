@@ -1,2 +1,0 @@
-# Redis Hash
-
