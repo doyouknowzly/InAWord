@@ -39,6 +39,8 @@
 
 基于`redis`(要通过Lua脚本，因为setnx命令不能原子地设置过期时间。
 
+> 新版本的redis可以通过set的参数，原子地设置过期时间
+
 又因为redis集器要考虑更复的场景，所以Redis作者antirez给出了RedLock算法解决,但本质上也不能完全可信)
 
 
