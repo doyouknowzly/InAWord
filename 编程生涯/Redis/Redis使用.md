@@ -8,7 +8,6 @@
 | 1    | redis可以用来干什么 |                                                          |          |
 | 2    | 网页版redis试用     | https://try.redis.io/                                    |          |
 | 4    | redis内存预估       | http://www.redis.cn/redis_memory/                        |          |
-| 5    | redis实现分布式锁   |                                                          |          |
 
 
 
@@ -31,8 +30,8 @@
 
 
 
-## 5.redis实现分布式锁
 
+<<<<<<< HEAD:中间件/Redis/Redis使用.md
 参考文章  [Redlock安全吗？](http://antirez.com/news/101)
 
 分布式锁的要求 : 互斥性、安全性、避免死锁、高可用。
@@ -42,6 +41,8 @@
 > 新版本的redis可以通过set的参数，原子地设置过期时间
 
 又因为redis集器要考虑更复的场景，所以Redis作者antirez给出了RedLock算法解决,但本质上也不能完全可信)
+=======
+>>>>>>> 6c79b577cbc1014490bd20b264129f0d175b54be:编程生涯/Redis/Redis使用.md
 
 
 
